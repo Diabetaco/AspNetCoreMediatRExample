@@ -1,5 +1,6 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -18,17 +19,20 @@ public class UpdateAddressHandler
 
     public async Task<Guid> Handle(UpdateAddressRequest request, CancellationToken cancellationToken)
     {
+      
         IEnumerable<AddressBookEntry> AddressBookEntries = _repo.Find(new AllEntriesSpecification());
 
+        int i = 0;
         foreach (AddressBookEntry entry in AddressBookEntries)
         {
             if (entry.Id == request.Id)
             {
-                _repo.Update(entry);
-                return await Task.FromResult(entry.Id);
-            } 
+                break;
+            }
+            i++;
         }
-
-        return await Task.FromResult(entry.Id);
+        AddressBookEntries.ElementAt(i).Update(AddressBookEntries.ElementAt(i));
+        return await Task.FromResult(AddressBookEntries.ElementAt(i).Id);
     }
-}*/
+
+}

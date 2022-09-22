@@ -36,18 +36,21 @@ public class EditModel : PageModel
                 UpdateAddressRequest.City = entry.City;
                 UpdateAddressRequest.State = entry.State;
                 UpdateAddressRequest.PostalCode = entry.PostalCode;
-
+				UpdateAddressRequest.Id = entry.Id;
+				_repo.Update(entry);
             }
 		}
+
+		
         // Todo: Use repo to get address book entry, set UpdateAddressRequest fields.
     }
 
-	public ActionResult OnPost()
-	{
-		if (ModelState.IsValid)
+    public async Task<ActionResult> OnPost()
+    {
+        if (ModelState.IsValid)
 		{
-            _mediator.Send(UpdateAddressRequest);
-			RedirectToPage("Index");
+            _ = await _mediator.Send(UpdateAddressRequest);
+			return RedirectToPage("Index");
 		}
 		// Todo: Use mediator to send a "command" to update the address book entry, redirect to entry list.
         return Page();
