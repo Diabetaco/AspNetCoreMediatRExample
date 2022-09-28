@@ -26,7 +26,7 @@ public class AddressBookEntry : IEntity
 	public string State { get; private set; }
 	public string PostalCode { get; private set; }
 
-	public Guid Id { get; set; }
+	public Guid Id { get;}
 
 	public void Update(string line1, string line2, string city, string state, string postalCode)
 	{
