@@ -40,9 +40,6 @@ public class EditModel : PageModel
 				UpdateAddressRequest.Id = entry.Id;
             }
 		}
-
-		
-        // Todo: Use repo to get address book entry, set UpdateAddressRequest fields.
     }
 
     public async Task<ActionResult> OnPost()
@@ -52,7 +49,6 @@ public class EditModel : PageModel
             _ = await _mediator.Send(UpdateAddressRequest);
 			return RedirectToPage("Index");
 		}
-		// Todo: Use mediator to send a "command" to update the address book entry, redirect to entry list.
         return Page();
 	}
 }

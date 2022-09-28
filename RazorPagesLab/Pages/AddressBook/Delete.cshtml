@@ -15,6 +15,11 @@
 	<span>@ViewData["Message"]</span>
 
 	<div class="form-group">
+		<span asp-for="DeleteAddressRequest.Id"></span>
+		<input asp-for="DeleteAddressRequest.Id"
+				type="hidden" />
+
+	<div class="form-group">
 		<label asp-for="DeleteAddressRequest.Line1"></label>
 		<input asp-for="DeleteAddressRequest.Line1"
 				type="text"
