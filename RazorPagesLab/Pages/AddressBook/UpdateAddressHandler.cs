@@ -19,22 +19,10 @@ public class UpdateAddressHandler
 
     public async Task<Guid> Handle(UpdateAddressRequest request, CancellationToken cancellationToken)
     {
-        var reqEntry = AddressBookEntry.Create(request.Line1, request.Line2, request.City, request.State,
-        request.PostalCode);
-
-        IEnumerable<AddressBookEntry> AddressBookEntries = _repo.Find(new AllEntriesSpecification());
-
-        int i = 0;
-        foreach (AddressBookEntry entry in AddressBookEntries)
-        {
-            if (entry.Id == request.Id) break;
-
-            i++;
-        }
-
-        reqEntry.Id = AddressBookEntries.ElementAt(i).Id;
-
-        _repo.Update(reqEntry);
+        IEnumerable<AddressBookEntry> entries = _repo.Find(new EntryByIdSpecification(request.Id));
+        AddressBookEntry entry = entries.ElementAt(0);
+        entry.Update(request.Line1, request.Line2, request.City, request.State, request.PostalCode);
+        _repo.Update(entry);
         return await Task.FromResult(request.Id);
     }
 

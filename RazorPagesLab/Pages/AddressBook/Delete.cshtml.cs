@@ -45,9 +45,14 @@ public class DeleteModel : PageModel
 
 
 
-    public async Task<ActionResult> OnPost()
+    public async Task<ActionResult> OnPostDelete()
     {
         _ = await _mediator.Send(DeleteAddressRequest);
+        return RedirectToPage("Index");
+    }
+
+    public ActionResult OnPostCancel()
+    {
         return RedirectToPage("Index");
     }
 }
