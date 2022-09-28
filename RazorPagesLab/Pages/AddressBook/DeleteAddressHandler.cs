@@ -19,21 +19,22 @@ public class DeleteAddressHandler
 
     public async Task<Guid> Handle(DeleteAddressRequest request, CancellationToken cancellationToken)
     {
-        var reqEntry = AddressBookEntry.Create("", "", "", "", "");
+        var reqEntry = AddressBookEntry.Create(request.Line1, request.Line2, request.City, request.State,
+        request.PostalCode);
 
         IEnumerable<AddressBookEntry> AddressBookEntries = _repo.Find(new AllEntriesSpecification());
 
         int i = 0;
         foreach (AddressBookEntry entry in AddressBookEntries)
         {
-            if (entry.Id == request.Id) break;
-
+            if (entry.Id == request.Id)
+            {
+                _repo.Remove(entry);
+                break;
+            }
             i++;
         }
 
-        reqEntry.Id = AddressBookEntries.ElementAt(i).Id;
-
-        _repo.Remove(reqEntry);
         return await Task.FromResult(request.Id);
     }
 }

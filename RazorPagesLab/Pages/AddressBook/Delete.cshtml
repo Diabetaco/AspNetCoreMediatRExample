@@ -1,0 +1,62 @@
+@page
+@model DeleteModel
+@{
+	ViewData["Title"] = "Delete Address Book Entry";
+}
+
+<style>
+	.validation-summary-valid { display: none; }
+</style>
+
+<h1>Delete Address Book Entry</h1>
+
+<form asp-page="Delete"
+	method="post">
+	<span>@ViewData["Message"]</span>
+
+	<div class="form-group">
+		<label asp-for="DeleteAddressRequest.Line1"></label>
+		<input asp-for="DeleteAddressRequest.Line1"
+				type="text"
+				class="form-control"
+				id="line1"
+				placeholder="Line 1" />
+	</div>
+	<div class="form-group">
+		<label asp-for="DeleteAddressRequest.Line2"></label>
+		<input asp-for="DeleteAddressRequest.Line2"
+				type="text"
+				class="form-control"
+				id="line2"
+				placeholder="Line 2" />
+	</div>
+	<div class="form-group">
+		<label asp-for="DeleteAddressRequest.City"></label>
+		<input asp-for="DeleteAddressRequest.City"
+				type="text"
+				class="form-control"
+				id="City"
+				placeholder="City" />
+	</div>
+	<div class="form-group">
+		<label asp-for="DeleteAddressRequest.State"></label>
+		<input asp-for="DeleteAddressRequest.State"
+				type="text"
+				class="form-control"
+				id="State"
+				placeholder="State" />
+	</div>
+	<div class="form-group">
+		<label asp-for="DeleteAddressRequest.PostalCode"></label>
+		<input asp-for="DeleteAddressRequest.PostalCode"
+				type="text"
+				class="form-control"
+				placeholder="Postal Code" />
+	</div>
+
+	<button type="submit"
+			class="btn btn-primary">
+		Delete Address
+	</button>
+
+</form>

@@ -12,27 +12,42 @@ public class DeleteModel : PageModel
     private readonly IMediator _mediator;
     private readonly IRepo<AddressBookEntry> _repo;
 
+
     public DeleteModel(IRepo<AddressBookEntry> repo, IMediator mediator)
     {
         _repo = repo;
         _mediator = mediator;
     }
 
-    public void OnGet(Guid id)
-    {
-    }
-
     [BindProperty]
     public DeleteAddressRequest DeleteAddressRequest { get; set; }
 
+    public void OnGet(Guid id)
+    {
+        IEnumerable<AddressBookEntry> AddressBookEntries = _repo.Find(new AllEntriesSpecification());
+
+        foreach (AddressBookEntry entry in AddressBookEntries)
+        {
+            if (entry.Id == id)
+            {
+
+                DeleteAddressRequest = new DeleteAddressRequest();
+
+                DeleteAddressRequest.Line1 = entry.Line1;
+                DeleteAddressRequest.Line2 = entry.Line2;
+                DeleteAddressRequest.City = entry.City;
+                DeleteAddressRequest.State = entry.State;
+                DeleteAddressRequest.PostalCode = entry.PostalCode;
+                DeleteAddressRequest.Id = entry.Id;
+            }
+        }
+    }
+
+
+
     public async Task<ActionResult> OnPost()
     {
-        if (ModelState.IsValid)
-        {
-            _ = await _mediator.Send(DeleteAddressRequest);
-            return RedirectToPage("Index");
-        }
-
-        return Page();
+        _ = await _mediator.Send(DeleteAddressRequest);
+        return RedirectToPage("Index");
     }
 }
