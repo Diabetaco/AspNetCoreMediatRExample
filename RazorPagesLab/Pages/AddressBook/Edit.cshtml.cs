@@ -29,6 +29,7 @@ public class EditModel : PageModel
 		{
 			if (entry.Id == id)
 			{
+				
 				UpdateAddressRequest = new UpdateAddressRequest();
 
 				UpdateAddressRequest.Line1 = entry.Line1;
@@ -37,7 +38,6 @@ public class EditModel : PageModel
                 UpdateAddressRequest.State = entry.State;
                 UpdateAddressRequest.PostalCode = entry.PostalCode;
 				UpdateAddressRequest.Id = entry.Id;
-				_repo.Update(entry);
             }
 		}
 

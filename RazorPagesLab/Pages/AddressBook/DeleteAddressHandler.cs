@@ -7,20 +7,19 @@ using MediatR;
 
 namespace RazorPagesLab.Pages.AddressBook;
 
-public class UpdateAddressHandler
-    : IRequestHandler<UpdateAddressRequest, Guid>
+public class DeleteAddressHandler
+        : IRequestHandler<DeleteAddressRequest, Guid>
 {
     private readonly IRepo<AddressBookEntry> _repo;
 
-    public UpdateAddressHandler(IRepo<AddressBookEntry> repo)
+    public DeleteAddressHandler(IRepo<AddressBookEntry> repo)
     {
         _repo = repo;
     }
 
-    public async Task<Guid> Handle(UpdateAddressRequest request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(DeleteAddressRequest request, CancellationToken cancellationToken)
     {
-        var reqEntry = AddressBookEntry.Create(request.Line1, request.Line2, request.City, request.State,
-        request.PostalCode);
+        var reqEntry = AddressBookEntry.Create("", "", "", "", "");
 
         IEnumerable<AddressBookEntry> AddressBookEntries = _repo.Find(new AllEntriesSpecification());
 
@@ -34,8 +33,7 @@ public class UpdateAddressHandler
 
         reqEntry.Id = AddressBookEntries.ElementAt(i).Id;
 
-        _repo.Update(reqEntry);
+        _repo.Remove(reqEntry);
         return await Task.FromResult(request.Id);
     }
-
 }
